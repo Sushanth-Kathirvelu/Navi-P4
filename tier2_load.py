@@ -6,6 +6,8 @@ import gc
 import copy
 
 tier1_loc = "/Users/hemanth/Desktop/MSAI/DataSciencePracticum/Projects/p4/tier1/"
+tier2_loc = "/Users/hemanth/Desktop/MSAI/DataSciencePracticum/Projects/p4/tier2/"
+
 credit_card_balance = "credit_card_balance.csv"
 installments_payments = "installments_payments.csv"
 pos_cash_balance = "POS_CASH_balance.csv"
@@ -29,21 +31,29 @@ def one_hot_encoder(df, nan_as_category = True):
 #Reading train dataset
 train_df = pd.read_csv(tier1_loc+train)
 
-train_df.count()
+#train_df.count()
 #train has 307,511
 
 #Reading test dataset
 test_df = pd.read_csv(tier1_loc+test)
-test_df.count()
+#test_df.count()
 
 #Length of training set
 train_objs_num = len(train_df)
 
 #Joining train and test to perform tranformations
-dataset = pd.concat(objs=[train_df, test_df], axis=0)
+dataset = pd.concat(objs=[train_df, test_df], axis=0,sort=False)
 dataset = one_hot_encoder(dataset, nan_as_category= True)
+
+dataset = dataset.loc[:, (dataset != dataset.iloc[0]).any()] 
+
 train_df = copy.copy(dataset[:train_objs_num])
 test_df = copy.copy(dataset[train_objs_num:])
+
+del dataset,train_objs_num
+
+train_df.to_csv(path_or_buf = tier2_loc+train,index=False)
+test_df.to_csv(path_or_buf = tier2_loc+test,index=False)
 
 ##############################################################################################
 #Reading and pre-processing previous_application.csv
@@ -74,6 +84,11 @@ pa_agg.pa_count.describe()
 del pa
 gc.collect()
 
+pa_agg = pa_agg.loc[:, (pa_agg != pa_agg.iloc[0]).any()] 
+
+pa_agg.to_csv(path_or_buf = tier2_loc+previous_application,index=False)
+
+
 ##############################################################################################
 #Reading and pre-processing bureau.csv
 ##############################################################################################
@@ -83,6 +98,12 @@ b = pd.read_csv(tier1_loc+bureau)
 
 #One hot encoding for all categorical columns
 b = one_hot_encoder(b, nan_as_category= True)
+
+b = b.loc[:, (b != b.iloc[0]).any()] 
+
+
+b.to_csv(path_or_buf = tier2_loc+bureau,index=False)
+
 
 ##############################################################################################
 #Reading and pre-processing bureau_balance.csv
@@ -105,6 +126,12 @@ bb_agg['bb_count'] = bb.groupby('SK_ID_BUREAU').size()
 bb_agg.bb_count.describe()
 
 del bb
+
+bb_agg = bb_agg.loc[:, (bb_agg != bb_agg.iloc[0]).any()] 
+
+
+bb_agg.to_csv(path_or_buf = tier2_loc+bureau_balance,index=False)
+
 
 ##############################################################################################
 #Reading and pre-processing credit_card_balance.csv
@@ -133,6 +160,12 @@ ccb_agg['cc_count'] = ccb.groupby('SK_ID_CURR').size()
 ccb_agg.cc_count.describe()
 
 del ccb
+
+ccb_agg = ccb_agg.loc[:, (ccb_agg != ccb_agg.iloc[0]).any()] 
+
+
+ccb_agg.to_csv(path_or_buf = tier2_loc+credit_card_balance,index=False)
+
 
 ##############################################################################################
 #Reading and pre-processing installments_payments.csv
@@ -163,6 +196,12 @@ ip_agg.ip_count.describe()
 
 del ip
 
+ip_agg = ip_agg.loc[:, (ip_agg != ip_agg.iloc[0]).any()] 
+
+
+ip_agg.to_csv(path_or_buf = tier2_loc+installments_payments,index=False)
+
+
 ##############################################################################################
 #Reading and pre-processing POS_CASH_balance.csv
 ##############################################################################################
@@ -190,6 +229,11 @@ pcb_agg['pcb_count'] = pcb.groupby('SK_ID_CURR').size()
 pcb_agg.pcb_count.describe()
 
 del pcb
+
+pcb_agg = pcb_agg.loc[:, (pcb_agg != pcb_agg.iloc[0]).any()] 
+
+pcb_agg.to_csv(path_or_buf = tier2_loc+pos_cash_balance,index=False)
+
 
 ##############################################################################################
 
