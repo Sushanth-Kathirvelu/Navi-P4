@@ -67,7 +67,3 @@ test_set.shape
 
 train_set.to_csv(path_or_buf = tier3_loc+train,index=False)
 test_set.to_csv(path_or_buf = tier3_loc+test,index=False)
-
-
-
-
