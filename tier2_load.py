@@ -5,8 +5,10 @@ import pandas as pd
 import gc
 import copy
 
-tier1_loc = "/Users/hemanth/Desktop/MSAI/DataSciencePracticum/Projects/p4/tier1/"
-tier2_loc = "/Users/hemanth/Desktop/MSAI/DataSciencePracticum/Projects/p4/tier2/"
+dir = "/Users/hemanth/Desktop/MSAI/DataSciencePracticum/Projects/p4"
+tier2_loc = dir+"/tier2/"
+tier1_loc = dir+"/tier1/"
+
 
 credit_card_balance = "credit_card_balance.csv"
 installments_payments = "installments_payments.csv"
@@ -49,6 +51,9 @@ dataset = dataset.loc[:, (dataset != dataset.iloc[0]).any()]
 
 train_df = copy.copy(dataset[:train_objs_num])
 test_df = copy.copy(dataset[train_objs_num:])
+
+#Dropping prev_id as it is not needed for the join
+test_df.drop(['TARGET'],axis =1,inplace=True)
 
 del dataset,train_objs_num
 
