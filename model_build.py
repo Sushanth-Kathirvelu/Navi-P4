@@ -6,6 +6,7 @@ import pandas as pd
 #import os
 from sklearn.model_selection import KFold, StratifiedKFold
 from sklearn.metrics import roc_auc_score
+from sklearn.ensemble import RandomForestClassifier
 from lightgbm import LGBMClassifier
 import numpy as np
 import matplotlib.pyplot as plt
@@ -100,4 +101,34 @@ test_df.shape
 #X_train = train_df.loc[:, train_df.columns != 'TARGET']
 #y_train = train_df['TARGET']
 
-feat_importance = kfold_lightgbm(train_df,test_df, num_folds= 10, stratified= False,debug = False)
+feat_importance = kfold_lightgbm(train_df,test_df, num_folds= 7, stratified= False,debug = False)
+
+
+import operator
+
+train_df.fillna(-999,inplace=True)
+
+rf = RandomForestClassifier(
+	n_estimators=50,
+	max_depth=8,
+	min_samples_leaf=4,
+	max_features=0.5)
+rf.fit(train_df.drop(['TARGET', 'SK_ID_CURR'], axis=1), train_df['TARGET'])
+old_features = list(train_df.drop(['SK_ID_CURR', 'TARGET'], axis=1))
+feature_importances = {}
+feature_importances_list = rf.feature_importances_
+for index, feature in enumerate(old_features):
+    feature_importances[feature] = feature_importances_list[index]
+itemlist = sorted(feature_importances.items(), key=operator.itemgetter(1), reverse=True)
+
+fig, ax = plt.subplots()
+feature_names = [x[0] for x in itemlist[:20]]
+feature_importance = [x[1] for x in itemlist[:20]]
+
+ax.barh(feature_names, feature_importance, align='center')
+ax.set_yticklabels(feature_names)
+ax.invert_yaxis()
+ax.set_xlabel('Importance')
+ax.set_title('Feature Importance')
+
+plt.show()
