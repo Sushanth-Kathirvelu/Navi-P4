@@ -94,8 +94,8 @@ test_df = pd.read_csv(tier3_loc+test)
 test_df.shape
 
 #Dropping prev_id as it is not needed for the join
-train_df.drop(['SK_ID_CURR'],axis =1,inplace=True)
-test_df.drop(['SK_ID_CURR'],axis =1,inplace=True)
+#train_df.drop(['SK_ID_CURR'],axis =1,inplace=True)
+#test_df.drop(['SK_ID_CURR'],axis =1,inplace=True)
 
 #X_train = train_df.loc[:, train_df.columns != 'TARGET']
 #y_train = train_df['TARGET']
