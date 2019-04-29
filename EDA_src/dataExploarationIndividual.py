@@ -1,4 +1,5 @@
-import pandas as pd # package for high-performance, easy-to-use data structures and data analysis
+import pandas as pd 
+# package for high-performance, easy-to-use data structures and data analysis
 import numpy as np # fundamental package for scientific computing with Python
 import matplotlib
 import matplotlib.pyplot as plt # for plotting
@@ -11,31 +12,14 @@ init_notebook_mode(connected=True)
 import plotly.graph_objs as go
 import plotly.offline as offline
 offline.init_notebook_mode()
-# from plotly import tools
-# import plotly.tools as tls
-# import squarify
-# from mpl_toolkits.basemap import Basemap
-# from numpy import array
-# from matplotlib import cm
-
-# import cufflinks and offline mode
 import cufflinks as cf
 cf.go_offline()
 
-# from sklearn import preprocessing
-# # Supress unnecessary warnings so that presentation looks clean
-# import warnings
-# warnings.filterwarnings("ignore")
-
-# # Print all rows and columns
-# pd.set_option('display.max_columns', None)
-# pd.set_option('display.max_rows', None)
-
 import sizeOfData
 
-sizeOfData.assignDataToVariables()
+sizeOfData.assign_data_to_variables()
  
-def distributionOfAMT_CREDIT():
+def distribution_of_AMT_CREDIT():
     """
     This function plots a bar graph for the distribution of the AMT_CREDIT in 
     application_train .CSV data set
@@ -44,25 +28,25 @@ def distributionOfAMT_CREDIT():
     plt.title("Distribution of AMT_CREDIT")
     ax = sns.distplot(application_train["AMT_CREDIT"])
     
-def distributionOfAMT_INCOME_TOTAL():
+def distribution_of_AMT_INCOME_TOTAL():
     """
-    This function plots a bar graph for the distribution of the AMT_INCOME_TOTAL in 
-    application_train .CSV data set
+    This function plots a bar graph for the distribution of the 
+    AMT_INCOME_TOTAL in application_train .CSV data set
     """
     plt.figure(figsize=(12,5))
     plt.title("Distribution of AMT_INCOME_TOTAL")
     ax = sns.distplot(application_train["AMT_INCOME_TOTAL"].dropna())
     
-def distributionOfAMT_GOODS_PRICE():
+def distribution_of_AMT_GOODS_PRICE():
      """
-    This function plots a bar graph for the distribution of the AMT_GOODS_PRICE in 
-    application_train .CSV data set
+    This function plots a bar graph for the distribution of the 
+    AMT_GOODS_PRICE in application_train .CSV data set
     """
     plt.figure(figsize=(12,5))
     plt.title("Distribution of AMT_GOODS_PRICE")
     ax = sns.distplot(application_train["AMT_GOODS_PRICE"].dropna())
     
-def whoAccompaniedClient():
+def who_accompanied_client():
     """
     This function plots a bar graph of Who accompanied client when applying 
     for the  application
@@ -74,7 +58,8 @@ def whoAccompaniedClient():
     )
     data = [trace]
     layout = go.Layout(
-        title = "Who accompanied client when applying for the  application in % ",
+        title = /
+        "Who accompanied client when applying for the  application in % ",
         xaxis=dict(
             title='Name of type of the Suite',
             tickfont=dict(
@@ -97,7 +82,7 @@ def whoAccompaniedClient():
     fig = go.Figure(data=data, layout=layout)
     py.iplot(fig, filename='schoolStateNames')
     
-def typesOfLoan():
+def types_of_loan():
     """
     This function plots a pi chart of the Type of loan the applicant is 
     applying for.
@@ -134,7 +119,7 @@ def typesOfLoan():
     }
     iplot(fig, filename='donut')
     
-def purposeOfLoan():
+def purpose_of_loan():
     """
     This function plots a pi chart of the purpose of loan the applicant is 
     applying for.
@@ -190,7 +175,7 @@ def purposeOfLoan():
     }
     iplot(fig, filename='donut')
     
-def incomeSources():
+def income_sources():
     """
     This function plots a pi chart for the Income sources of Applicant's
     who applied for loan
@@ -199,9 +184,10 @@ def incomeSources():
     df = pd.DataFrame({'labels': temp.index,
                        'values': temp.values
                       })
-    df.iplot(kind='pie',labels='labels',values='values', title='Income sources of Applicant\'s', hole = 0.5)
+    df.iplot(kind='pie',labels='labels',values='values', /
+             title='Income sources of Applicant\'s', hole = 0.5)
 
-def Family_Status():
+def family_status():
     """
     This function plots a pi chart for Family Status of Applicant's
     who applied for loan
@@ -210,7 +196,8 @@ def Family_Status():
     df = pd.DataFrame({'labels': temp.index,
                        'values': temp.values
                       })
-    df.iplot(kind='pie',labels='labels',values='values', title='Family Status of Applicant\'s', hole = 0.5)
+    df.iplot(kind='pie',labels='labels',values='values', /
+             title='Family Status of Applicant\'s', hole = 0.5)
         
 def occupation():
     """
@@ -218,7 +205,9 @@ def occupation():
     who applied for loan
     """
     temp = application_train["OCCUPATION_TYPE"].value_counts()
-    temp.iplot(kind='bar', xTitle = 'Occupation', yTitle = "Count", title = 'Occupation of Applicant\'s who applied for loan', color = 'green')    
+    temp.iplot(kind='bar', xTitle = 'Occupation', yTitle = "Count", /
+               title = 'Occupation of Applicant\'s who applied for loan', /
+               color = 'green')    
         
 def education():
     """
@@ -229,9 +218,10 @@ def education():
     df = pd.DataFrame({'labels': temp.index,
                        'values': temp.values
                       })
-    df.iplot(kind='pie',labels='labels',values='values', title='Education of Applicant\'s', hole = 0.5)
+    df.iplot(kind='pie',labels='labels',values='values', /
+             title='Education of Applicant\'s', hole = 0.5)
 
-def typeOfHouse():
+def type_of_house():
     """
     This function plots a pi chart for type of house the applicant is applying
     loan for.
@@ -240,12 +230,15 @@ def typeOfHouse():
     df = pd.DataFrame({'labels': temp.index,
                        'values': temp.values
                       })
-    df.iplot(kind='pie',labels='labels',values='values', title='Type of House', hole = 0.5)
+    df.iplot(kind='pie',labels='labels',values='values', /
+             title='Type of House', hole = 0.5)
  
-def typeOfOrganization():
+def type_of_organization():
     """
-    This function plots a pi chart for type of Organization the applicant is applying
-    loan from.
+    This function plots a pi chart for type of Organization the applicant is 
+    applying loan from.
     """
     temp = application_train["ORGANIZATION_TYPE"].value_counts()
-    temp.iplot(kind='bar', xTitle = 'Organization Name', yTitle = "Count", title = 'Types of Organizations who applied for loan ', color = 'red')
+    temp.iplot(kind='bar', xTitle = 'Organization Name', yTitle = "Count",/
+               title = 'Types of Organizations who applied for loan ', /
+               color = 'red')
