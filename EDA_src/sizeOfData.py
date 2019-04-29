@@ -1,4 +1,6 @@
-import pandas as pd # package for high-performance, easy-to-use data structures and data analysis
+# package for high-performance, easy-to-use data structures and data analysis
+import pandas as pd
+
 
 def assignDataToVariables():
     """
@@ -13,18 +15,18 @@ def assignDataToVariables():
     bureau = pd.read_csv('../input/bureau.csv')
     application_test = pd.read_csv('../input/application_test.csv')
 
+
 def sizeOfDataSets():
     """
     This function is used to check the size of all the CSV files
     i.e The number of rows and coloumns in each CSV file
     """
-	print('Size of application_train data', application_train.shape)
-	print('Size of POS_CASH_balance data', POS_CASH_balance.shape)
-	print('Size of bureau_balance data', bureau_balance.shape)
-	print('Size of previous_application data', previous_application.shape)
-	print('Size of installments_payments data', installments_payments.shape)
-	print('Size of credit_card_balance data', credit_card_balance.shape)
-	print('Size of bureau data', bureau.shape)
-
-
-
+    print('Size of application_train data', application_train.shape)
+    print('Size of POS_CASH_balance data', POS_CASH_balance.shape)
+    print('Size of bureau_balance data', bureau_balance.shape)
+    print('Size of previous_application data', previous_application.shape)
+    print(
+        'Size of installments_payments data',
+        installments_payments.shape)
+    print('Size of credit_card_balance data', credit_card_balance.shape)
+    print('Size of bureau data', bureau.shape)
