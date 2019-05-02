@@ -329,7 +329,7 @@ def main():
 
     # Checking if the tier-1 directory is present in the project directory
     if not os.path.isdir(tier1_loc):
-        print("Tier-1 folder missing in project dir, please create and re-run")
+        print("Tier-1 folder not present, please create and re-run")
         # raise NotADirectoryError("tier-1 folder is missing in project dir.")
         sys.exit()
 
