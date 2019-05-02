@@ -199,9 +199,6 @@ def bureau_balance_ltw(tier1_loc,bureau_balance,tier2_loc):
         bb_agg.to_csv(path_or_buf = tier2_loc+bureau_balance,index=False)
 
 
-##############################################################################################
-#Reading and pre-processing credit_card_balance.csv
-##############################################################################################
 def ccb_ltw(tier1_loc,credit_card_balance,tier2_loc):
     """
     This function loads credit card balance data from tier-1,
@@ -307,6 +304,7 @@ def pcb_ltw(tier1_loc,pos_cash_balance,tier2_loc):
         pcb_agg.to_csv(path_or_buf = tier2_loc+pos_cash_balance,index=False)
 
 def main():
+    
     # Checking if the tier-1 directory is present in the project directory
     if not os.path.isdir(tier1_loc):
         print("Tier-1 folder is missing in project dir, please create and re-run")
