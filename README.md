@@ -20,6 +20,10 @@ List of requirements and links to install them:
 * [pandas](https://pandas.pydata.org/index.html)
 * [numpy](https://www.numpy.org)
 
+Use the setup.py to install all the Prerequisites for the Project
+
+      python setup.py install
+
 ## Data
 
 The Data set consist of 6 CSV files namely:
