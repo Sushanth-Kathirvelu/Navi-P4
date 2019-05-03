@@ -86,6 +86,9 @@ def create_feature_matrix(
         The newly created testing dataset.
     """
 
+
+    #Here we create Entities and specify their relations.
+    #@https://docs.featuretools.com/index.html for more info.
     es = ft.EntitySet(id='dsp')
 
     es = es.entity_from_dataframe(
@@ -137,12 +140,14 @@ def create_feature_matrix(
 
     es = es.add_relationships(list(relations.values()))
 
+    #Here we perform DFS with subset of feature primitives.
     if primitive_set == 'some':
         feature_matrix, feature_defs = ft.dfs(
             entityset=es, target_entity='combine', agg_primitives=[
                 'sum', 'count', 'min', 'max', 'mean', 'mode'],
             trans_primitives=[], max_depth=2, verbose=True)
 
+    #Here we perform DFS with all default feature primitives.
     elif primitive_set == 'all':
         feature_matrix, feature_defs = ft.dfs(
             entityset=es, target_entity='combine', agg_primitives=[
@@ -185,11 +190,7 @@ def feature_select(train_df, test_df, importance_threshold):
     train_df.fillna(-999, inplace=True)
     test_df.fillna(-999, inplace=True)
 
-    rf = RandomForestClassifier(
-        n_estimators=50,
-        max_depth=8,
-        min_samples_leaf=4,
-        max_features=0.5)
+    rf = RandomForestClassifier()
     rf.fit(train_df.drop(['TARGET', 'SK_ID_CURR'], axis=1), train_df['TARGET'])
     old_features = list(train_df.drop(['SK_ID_CURR', 'TARGET'], axis=1))
     feature_importances = {}
@@ -197,14 +198,17 @@ def feature_select(train_df, test_df, importance_threshold):
     for index, feature in enumerate(old_features):
         feature_importances[feature] = feature_importances_list[index]
 
+    #Saving only features with importance higher than threshold.
     new_features = []
     for feature in feature_importances:
-        if feature_importances[feature] >= importance_threshold:
+        if feature_importances[feature] > importance_threshold:
             new_features.append(feature)
 
     new_features.append('SK_ID_CURR')
     new_features.append('TARGET')
 
+    #Making sure train and test have same features.
+    #This is required due to one hot encoding.
     feat_list = [k for k in new_features if k in test_df.columns]
     train_df = train_df[feat_list]
     test_df = test_df[feat_list]
@@ -228,12 +232,6 @@ def load_feature_matrix(
     ----------
     path : str
         Path to the data folder.
-    Returns
-    ----------
-    final_train : pandas dataframe
-        The final training dataset.
-    final_test : pandas dataframe
-        The final testing dataset.
     primitive_set : str
         If some or all of the primitives should be used
     importance_threshold : float
@@ -244,6 +242,14 @@ def load_feature_matrix(
         Train file name to write into tier-3
     test_write : str
         Test file name to write into tier-3
+
+    Returns
+    ----------
+    final_train : pandas dataframe
+        The final training dataset.
+    final_test : pandas dataframe
+        The final testing dataset.
+
     """
 
     # Checking if tier-3 exists, if not, then creating
@@ -263,6 +269,6 @@ def load_feature_matrix(
     final_train, final_test = feature_select(
         train_df, test_df, importance_threshold)
 
-    # Saving
+    # Saving to disk.
     final_train.to_csv(path_or_buf=tier3_loc + train_write, index=False)
     final_test.to_csv(path_or_buf=tier3_loc + test_write, index=False)
