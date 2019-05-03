@@ -309,10 +309,20 @@ def pcb_ltw(tier1_loc, pos_cash_balance, tier2_loc):
         pcb_agg.to_csv(path_or_buf=tier2_loc + pos_cash_balance, index=False)
 
 
-def tier2_loader(tier1_loc,tier2_loc,train,test,previous_application,bureau,bureau_balance,credit_card_balance,installments_payments,pos_cash_balance):
-    """ 
+def tier2_loader(
+        tier1_loc,
+        tier2_loc,
+        train,
+        test,
+        previous_application,
+        bureau,
+        bureau_balance,
+        credit_card_balance,
+        installments_payments,
+        pos_cash_balance):
     """
-    
+    """
+
     # Checking if the tier-1 pathectory is present in the project pathectory
     if not os.path.isdir(tier1_loc):
         print("Tier-1 folder not present, please create and re-run")
@@ -331,4 +341,3 @@ def tier2_loader(tier1_loc,tier2_loc,train,test,previous_application,bureau,bure
     ccb_ltw(tier1_loc, credit_card_balance, tier2_loc)
     ip_ltw(tier1_loc, installments_payments, tier2_loc)
     pcb_ltw(tier1_loc, pos_cash_balance, tier2_loc)
-

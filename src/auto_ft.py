@@ -4,7 +4,6 @@ import featuretools as ft
 import os
 
 
-
 def read_data(path):
     """
     This function loads the data.
@@ -34,20 +33,48 @@ def read_data(path):
 
 #    train_df = pd.read_csv(path + '/application_train.csv')
 #    test_df = pd.read_csv(path + '/application_test.csv')
-    train_df = pd.read_csv(path + '/application_train.csv',nrows = 50).reset_index(drop = True)
-    test_df = pd.read_csv(path + '/application_test.csv',nrows = 50).reset_index(drop = True)
+    train_df = pd.read_csv(
+        path +
+        '/application_train.csv',
+        nrows=50).reset_index(
+        drop=True)
+    test_df = pd.read_csv(
+        path +
+        '/application_test.csv',
+        nrows=50).reset_index(
+        drop=True)
 #    bureau_df = pd.read_csv(path + '/bureau.csv')
 #    bureau_balance_df = pd.read_csv(path + '/bureau_balance.csv')
 #    pos_cash_df = pd.read_csv(path + '/POS_CASH_balance.csv')
 #    credit_card_df = pd.read_csv(path + '/credit_card_balance.csv')
 #    previous_application_df = pd.read_csv(path + '/previous_application.csv')
 #    installments_payments_df = pd.read_csv(path + '/installments_payments.csv')
-    bureau_df = pd.read_csv(path + '/bureau.csv',nrows = 55).reset_index(drop = True)
-    bureau_balance_df = pd.read_csv(path + '/bureau_balance.csv',nrows = 50).reset_index(drop = True)
-    pos_cash_df = pd.read_csv(path + '/POS_CASH_balance.csv',nrows = 50).reset_index(drop = True)
-    credit_card_df = pd.read_csv(path + '/credit_card_balance.csv',nrows = 50).reset_index(drop = True)
-    previous_application_df = pd.read_csv(path + '/previous_application.csv',nrows = 50).reset_index(drop = True)
-    installments_payments_df = pd.read_csv(path + '/installments_payments.csv',nrows = 50).reset_index(drop = True)
+    bureau_df = pd.read_csv(
+        path +
+        '/bureau.csv',
+        nrows=55).reset_index(
+        drop=True)
+    bureau_balance_df = pd.read_csv(
+        path + '/bureau_balance.csv',
+        nrows=50).reset_index(
+        drop=True)
+    pos_cash_df = pd.read_csv(
+        path +
+        '/POS_CASH_balance.csv',
+        nrows=50).reset_index(
+        drop=True)
+    credit_card_df = pd.read_csv(
+        path + '/credit_card_balance.csv',
+        nrows=50).reset_index(
+        drop=True)
+    previous_application_df = pd.read_csv(
+        path + '/previous_application.csv',
+        nrows=50).reset_index(
+        drop=True)
+    installments_payments_df = pd.read_csv(
+        path + '/installments_payments.csv',
+        nrows=50).reset_index(
+        drop=True)
 
     test_df["TARGET"] = -999
     combine_df = train_df.append(test_df, ignore_index=True)
@@ -150,8 +177,8 @@ def create_feature_matrix(
     elif primitive_set == 'all':
         feature_matrix, feature_defs = ft.dfs(
             entityset=es, target_entity='combine', agg_primitives=[
-                'sum', 'std', 'max', 'skew', 'min', 'mean', 'count', 'percent_true', 'n_unique', 'mode'],trans_primitives=[
-                'day', 'year', 'month', 'weekday', 'haversine', 'num_words', 'num_characters'],max_depth=2, verbose=True)
+                'sum', 'std', 'max', 'skew', 'min', 'mean', 'count', 'percent_true', 'n_unique', 'mode'], trans_primitives=[
+                'day', 'year', 'month', 'weekday', 'haversine', 'num_words', 'num_characters'], max_depth=2, verbose=True)
 
     train_df = feature_matrix[feature_matrix['TARGET'] != -999]
     test_df = feature_matrix[feature_matrix['TARGET'] == -999]
@@ -215,7 +242,13 @@ def feature_select(train_df, test_df, importance_threshold):
     return train_df, test_df
 
 
-def load_feature_matrix(path, primitive_set, importance_threshold,tier3_loc,train_write,test_write):
+def load_feature_matrix(
+        path,
+        primitive_set,
+        importance_threshold,
+        tier3_loc,
+        train_write,
+        test_write):
     """
     This function creates the training and
     testing feature matrices.
@@ -230,7 +263,7 @@ def load_feature_matrix(path, primitive_set, importance_threshold,tier3_loc,trai
     final_test : pandas dataframe
         The final testing dataset.
     """
-    
+
     # Checking if tier-3 exists, if not, then creating
     if not os.path.isdir(tier3_loc):
         print("Creating tier-3 folder")
@@ -241,8 +274,9 @@ def load_feature_matrix(path, primitive_set, importance_threshold,tier3_loc,trai
     train_df, test_df = create_feature_matrix(combine_df, bureau_df, bureau_balance_df, pos_cash_df,
                                               credit_card_df, previous_application_df, installments_payments_df,
                                               primitive_set)
-    final_train, final_test = feature_select(train_df, test_df, importance_threshold)
-    
+    final_train, final_test = feature_select(
+        train_df, test_df, importance_threshold)
+
     # Saving
     final_train.to_csv(path_or_buf=tier3_loc + train_write, index=False)
     final_test.to_csv(path_or_buf=tier3_loc + test_write, index=False)

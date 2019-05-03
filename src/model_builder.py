@@ -6,19 +6,35 @@ import numpy as np
 import os
 
 
-def kfold_lightgbm(train_df,test_df,submission_file_name,path,stratified = False,num_folds = 5):
-   
+def kfold_lightgbm(
+        train_df,
+        test_df,
+        submission_file_name,
+        path,
+        stratified=False,
+        num_folds=5):
+
     # Cross validation model
     if stratified:
-        folds = StratifiedKFold(n_splits= num_folds, shuffle=True, random_state=1001)
+        folds = StratifiedKFold(
+            n_splits=num_folds,
+            shuffle=True,
+            random_state=1001)
     else:
-        folds = KFold(n_splits= num_folds, shuffle=True, random_state=1001)
+        folds = KFold(n_splits=num_folds, shuffle=True, random_state=1001)
     # Create arrays and dataframes to store results
     oof_preds = np.zeros(train_df.shape[0])
     sub_preds = np.zeros(test_df.shape[0])
-    feats = [f for f in train_df.columns if f not in ['TARGET','SK_ID_CURR','SK_ID_BUREAU','SK_ID_PREV','index']]
-    
-    for n_fold, (train_idx, valid_idx) in enumerate(folds.split(train_df[feats], train_df['TARGET'])):
+    feats = [
+        f for f in train_df.columns if f not in [
+            'TARGET',
+            'SK_ID_CURR',
+            'SK_ID_BUREAU',
+            'SK_ID_PREV',
+            'index']]
+
+    for n_fold, (train_idx, valid_idx) in enumerate(
+            folds.split(train_df[feats], train_df['TARGET'])):
         train_x, train_y = train_df[feats].iloc[train_idx], train_df['TARGET'].iloc[train_idx]
         valid_x, valid_y = train_df[feats].iloc[valid_idx], train_df['TARGET'].iloc[valid_idx]
 
@@ -36,42 +52,64 @@ def kfold_lightgbm(train_df,test_df,submission_file_name,path,stratified = False
             min_split_gain=0.0222415,
             min_child_weight=39.3259775,
             silent=-1,
-            verbose=-1 )
+            verbose=-1)
 
-        clf.fit(train_x, train_y, eval_set=[(train_x, train_y), (valid_x, valid_y)], 
-            eval_metric= 'auc', verbose= 200, early_stopping_rounds= 200)
+        clf.fit(
+            train_x,
+            train_y,
+            eval_set=[
+                (train_x,
+                 train_y),
+                (valid_x,
+                 valid_y)],
+            eval_metric='auc',
+            verbose=200,
+            early_stopping_rounds=200)
 
-        oof_preds[valid_idx] = clf.predict_proba(valid_x, num_iteration=clf.best_iteration_)[:, 1]
-        sub_preds += clf.predict_proba(test_df[feats], num_iteration=clf.best_iteration_)[:, 1] / folds.n_splits
+        oof_preds[valid_idx] = clf.predict_proba(
+            valid_x, num_iteration=clf.best_iteration_)[:, 1]
+        sub_preds += clf.predict_proba(test_df[feats],
+                                       num_iteration=clf.best_iteration_)[:,
+                                                                          1] / folds.n_splits
 
         fold_importance_df = pd.DataFrame()
         fold_importance_df["feature"] = feats
         fold_importance_df["importance"] = clf.feature_importances_
         fold_importance_df["fold"] = n_fold + 1
-        print('Fold %2d AUC : %.6f' % (n_fold + 1, roc_auc_score(valid_y, oof_preds[valid_idx])))
+        print(
+            'Fold %2d AUC : %.6f' %
+            (n_fold +
+             1,
+             roc_auc_score(
+                 valid_y,
+                 oof_preds[valid_idx])))
         del clf, train_x, train_y, valid_x, valid_y
 
     print('Full AUC score %.6f' % roc_auc_score(train_df['TARGET'], oof_preds))
     test_df['TARGET'] = sub_preds
-    test_df[['SK_ID_CURR', 'TARGET']].to_csv(path+submission_file_name, index= False)
+    test_df[['SK_ID_CURR', 'TARGET']].to_csv(
+        path + submission_file_name, index=False)
 
 
+def model_train(
+        path,
+        tier3_loc,
+        train_write,
+        test_write,
+        submission_file_name):
 
-def model_train(path,tier3_loc,train_write,test_write,submission_file_name):
-    
-    os.environ['KMP_DUPLICATE_LIB_OK']='True'
-    
-    #Reading train dataset
-    train_df = pd.read_csv(tier3_loc+train_write)
-    
-    #Reading test dataset
-    test_df = pd.read_csv(tier3_loc+test_write)
-    
-    kfold_lightgbm(train_df,test_df,submission_file_name,path,stratified = False,num_folds = 5)
-    
+    os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
 
+    # Reading train dataset
+    train_df = pd.read_csv(tier3_loc + train_write)
 
+    # Reading test dataset
+    test_df = pd.read_csv(tier3_loc + test_write)
 
-
-
-    
+    kfold_lightgbm(
+        train_df,
+        test_df,
+        submission_file_name,
+        path,
+        stratified=False,
+        num_folds=5)

@@ -58,11 +58,22 @@ def perform_joins(df, bureau_df, pa, pcb, ip, ccb):
     return df
 
 
-def tier3_loader(tier2_loc,tier3_loc,train_write,test_write,train,test,previous_application,bureau,bureau_balance,credit_card_balance,installments_payments,pos_cash_balance):
-    """ 
+def tier3_loader(
+        tier2_loc,
+        tier3_loc,
+        train_write,
+        test_write,
+        train,
+        test,
+        previous_application,
+        bureau,
+        bureau_balance,
+        credit_card_balance,
+        installments_payments,
+        pos_cash_balance):
+    """
     """
 
-    
     # Checking if the tier-2 directory is present in the project directory
     if not os.path.isdir(tier2_loc):
         print("Tier-2 folder not present, create using tier2_load.py")
@@ -104,4 +115,3 @@ def tier3_loader(tier2_loc,tier3_loc,train_write,test_write,train,test,previous_
         # Saving
         train_set.to_csv(path_or_buf=tier3_loc + train_write, index=False)
         test_set.to_csv(path_or_buf=tier3_loc + test_write, index=False)
-
