@@ -1,3 +1,7 @@
+# Script reads train and test files from tier-3 and implements ML techniques on them
+# Script Reference :
+# https://www.kaggle.com/jsaguiar/lightgbm-with-simple-features
+
 import pandas as pd
 from lightgbm import LGBMClassifier
 from sklearn.model_selection import KFold, StratifiedKFold
