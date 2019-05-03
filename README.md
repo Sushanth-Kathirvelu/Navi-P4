@@ -112,7 +112,7 @@ Default : 'auto' <br />
 Choices : 'auto' - To generate features using feature tools <br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;          'manual' - To generate features based on manual feature engineering <br />
 
-`<primitive_set>` Set of primitives to consider while using feature tools
+`<primitive_set>` Set of primitives to consider while using feature tools <br />
 Default : 'some' <br />
 Choices : 'some' - To use some of the primitives while using feature tools <br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;          'all' - To use all the primitives while using feature tools <br />
