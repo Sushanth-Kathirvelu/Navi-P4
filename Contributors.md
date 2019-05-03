@@ -10,7 +10,7 @@
  
 [Sumer Singh](https://github.com/srs96) <br />
 1. Developed scripts for Automatic Feature Engineering
-2. Developed scripts for LightBGM and Random Forest models
+2. Developed model scripts.
 3. Tested the models with different features and Parameters
 4. Packaging and cleaning up entire code base
 5. Maintained the Kaggle submissions
