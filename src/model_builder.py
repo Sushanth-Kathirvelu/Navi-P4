@@ -149,4 +149,4 @@ def model_train(
         submission_file_name,
         path,
         stratified=False,
-        num_folds=5)
+        num_folds=2)

@@ -80,6 +80,19 @@ def train_test_ltw(tier1_loc, train, test, tier2_loc):
         dataset = pd.concat(objs=[train_df, test_df], axis=0, sort=False)
         # One hot encoding for all categorical columns
         dataset = one_hot_encoder(dataset, nan_as_category=True)
+
+        # Simple manual features using literature, domain knowledge
+        dataset['DAYS_EMPLOYED_PERC'] = dataset['DAYS_EMPLOYED'] / \
+            dataset['DAYS_BIRTH']
+        dataset['INCOME_CREDIT_PERC'] = dataset['AMT_INCOME_TOTAL'] / \
+            dataset['AMT_CREDIT']
+        dataset['INCOME_PER_PERSON'] = dataset['AMT_INCOME_TOTAL'] / \
+            dataset['CNT_FAM_MEMBERS']
+        dataset['ANNUITY_INCOME_PERC'] = dataset['AMT_ANNUITY'] / \
+            dataset['AMT_INCOME_TOTAL']
+        dataset['PAYMENT_RATE'] = dataset['AMT_ANNUITY'] / \
+            dataset['AMT_CREDIT']
+
         # Removing any constant columns
         dataset = dataset.loc[:, (dataset != dataset.iloc[0]).any()]
         # Splitting back into train and test
@@ -114,6 +127,10 @@ def previous_application_ltw(tier1_loc, previous_application, tier2_loc):
         pa.drop(['SK_ID_PREV'], axis=1, inplace=True)
         # One hot encoding for all categorical columns
         pa = one_hot_encoder(pa, nan_as_category=True)
+
+        # Simple manual features using literature, domain knowledge
+        pa['APP_CREDIT_PERC'] = pa['AMT_APPLICATION'] / pa['AMT_CREDIT']
+
         # Aggregating all columns based on SK_ID_CURR
         pa_agg = pa.groupby('SK_ID_CURR').agg(['min', 'max', 'mean', 'var'])
         # Cleaning column names after aggregation
@@ -251,6 +268,11 @@ def ip_ltw(tier1_loc, installments_payments, tier2_loc):
         ip.drop(['SK_ID_PREV'], axis=1, inplace=True)
         # One hot encoding for all categorical columns
         ip = one_hot_encoder(ip, nan_as_category=True)
+
+        # Simple manual features using literature, domain knowledge
+        ip['PAYMENT_PERC'] = ip['AMT_PAYMENT'] / ip['AMT_INSTALMENT']
+        ip['PAYMENT_DIFF'] = ip['AMT_INSTALMENT'] - ip['AMT_PAYMENT']
+
         # Aggregating all columns based on SK_ID_CURR
         ip_agg = ip.groupby('SK_ID_CURR').agg(['min', 'max', 'mean', 'var'])
         # Cleaning column names after aggregation
