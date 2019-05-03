@@ -137,9 +137,9 @@ The program will output `submission.json` in the given data folder.
   
 ## References
 
-* https://www.kaggle.com/willkoehrsen/start-here-a-gentle-introduction
-* https://www.kaggle.com/codename007/home-credit-complete-eda-feature-importance
-* https://docs.featuretools.com/index.html
+See the references Wiki page for details. 
+
+[References Wiki](https://github.com/dsp-uga/Navi-P4/wiki/References)
 
 ## Ethics Considerations
 This project could be used as a part of a study on the loan repayment abilities for an individual. With this context in mind, we have undertaken certain ethics considerations to ensure that this project cannot be misused for purposes other than the ones intended.
