@@ -111,7 +111,7 @@ def kfold_lightgbm(
     print('Full AUC score %.6f' % roc_auc_score(train_df['TARGET'], oof_preds))
     test_df['TARGET'] = sub_preds
     test_df[['SK_ID_CURR', 'TARGET']].to_csv(
-        path + submission_file_name, index=False)
+        path + '/' +submission_file_name, index=False)
 
 
 def model_train(
