@@ -8,7 +8,7 @@ This is a Kaggle Challenge. The link to the Challenge is as below.
 
       https://www.kaggle.com/c/home-credit-default-risk/
 
-### Goal: Predict how capable each applicant is of repaying a loan.
+### Goal: Predict if an applicant is capable of repaying a loan.
 
 ## Prerequisites
 List of requirements and links to install them:
@@ -55,11 +55,16 @@ Training models: <br />
 * https://www.kaggle.com/codename007/home-credit-complete-eda-feature-importance
 * https://docs.featuretools.com/index.html
 
+## Ethics Considerations
+This project could be used as a part of a study on the loan repayment abilities for an individual. With this context in mind, we have undertaken certain ethics considerations to ensure that this project cannot be misused for purposes other than the ones intended.
+
+See the [ETHICS.md](https://github.com/dsp-uga/Navi-P4/blob/master/ETHICS.md) file for details.
+Also see the [Wiki Ethics page](https://github.com/dsp-uga/Navi-P4/wiki/Ethics) for explanations about the ethics considerations.
 
 ## Contibutors
 See the contributors file for details. 
 
-[Contributors]()
+[Contributors](https://github.com/dsp-uga/Navi-P4/blob/master/Contributors.md)
 
 ## License
 This project is licensed under the MIT License- see the [LICENSE.md]( https://github.com/dsp-uga/Navi-P4/blob/master/LICENSE) file for details
