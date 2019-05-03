@@ -13,9 +13,12 @@ This is a Kaggle Challenge. The link to the Challenge is as below.
 ## Prerequisites
 List of requirements and links to install them:
 
-- [Python 3.6](https://www.python.org/downloads/release/python-360/)
-- [Anaconda](https://www.anaconda.com/) - Python Environment virtualization.      
-- [Google Cloud Platform or similar service](https://cloud.google.com/docs/)
+* [Python 3.6](https://www.python.org/downloads/release/python-360/)
+* [featuretools](https://www.featuretools.com)
+* [sklearn](https://scikit-learn.org/stable/)
+* [lightgbm](https://lightgbm.readthedocs.io/en/latest/)
+* [pandas](https://pandas.pydata.org/index.html)
+* [numpy](https://www.numpy.org)
 
 ## Data
 
@@ -36,11 +39,13 @@ The data are all available for download on:
       
 This link was provided by Kaggle .com
 
-## Example
-
 ## Approach 
+   
+This project features two end-to-end approaches taken to solve the Kaggle challenge 'Home Credit Default Risk'. The first approach is using features created manually and the second approach is using an automated feature creation tool. The results of both these methods are compared and it is found that automated feature engineering can create superior features, in a shorter amount of time.
 
-### Inputs
+Training models: <br />
+* Gradient Boosting Machines(GBM)
+* RandomForest
 
 ## Running
   
