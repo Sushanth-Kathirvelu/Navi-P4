@@ -9,7 +9,7 @@
 6. Updated Readme
  
 [Sumer Singh](https://github.com/srs96) <br />
-1. Developed scripts for Automatic Feature Engineering
+1. Developed scripts for Automatic Feature Engineering (auto_ft.py)
 2. Developed model scripts.
 3. Tested the models with different features and Parameters
 4. Packaging and cleaning up entire code base
