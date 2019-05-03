@@ -93,42 +93,25 @@ parent folder(project directory)
 
 
 ## Running the code
-`contrast.py -d \<data directory>\ -s \<save location>\ -u \<upper_bound>\ -l \<lower_bound>\`
 
-Required parameters:
+`main.py -d \<parent folder>\ -s \<save location>\ -u \<upper_bound>\ -l \<lower_bound>\`
 
-`<data directory>` Path to the data folder created as per the specifictions.
+Optional parameters: <br />
 
-Optional parameters:
+`<data_path>` Path to the parent folder created as per the directory specifications. <br />
+Default : Current working directory. <br />
+
+`<mode>` Mode to run the code in. <br />
+Default : 'all' <br />
+Choices : 'all' - To generate features and also train the model and generate predictions, <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;          'features' - To only generate the features, <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;          'model' - To only run the model <br />
 
 `<save location>` The location to save the output. Defaults to current working directory.
 
 `<upper_bound>` The upper bound for clipping. Defaults to 99.
 
 `<lower_bound>` The lower bound for clipping. Defaults to 3.
-
-
-## nmf.py
-
-* Perfroms nmf, as outlined [here](https://github.com/dsp-uga/Team-keller/wiki/Model-Approaches).
-* Follow the data format given above.
-
-### To run
-`nmf.py -d \<data directory>\ -k \<num_components>\ -p \<percentile>\ -m \<max_iter>\ -o \<overlap>\ `
-
-Required parameters:
-
-`<data directory>` Path to the data folder created as per the specifictions.
-
-Optional parameters:
-
-`<num_components>` The number of components to estimate per block. Defaults to 5.
-
-`<percentile>` The value for thresholding. Defaults to 90.
-
-`<max_iter>` The maximum number of algorithm iterations. Defaults to 20.
-
-`<overlap>` The value for determining whether to merge. Defaults to 0.1.
 
 Output:
 
