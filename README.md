@@ -51,7 +51,89 @@ Training models: <br />
 * Gradient Boosting Machines(GBM)
 * RandomForest
 
-## Running
+## Directory Specifications
+
+* Input data should follow the below structure: <br />
+The project directory should contain a folder named tier1 containing all the 6 raw csv files. <br />
+
+parent folder(project directory)  <br />
+&nbsp;&nbsp;&nbsp;&nbsp;  |- tier1 <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      |--Application_test.csv <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      |--Bureau.csv <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      |--Bureau_balance.csv <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      |--Previous_application.csv <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      |--Installments_payments.csv <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      |--Credit_card_balance.csv <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      |--POS_CASH_balance.csv <br />
+
+* Output once the entire code is completed will follow the below structure: <br />
+The submission file is written inside the project directory. <br />
+
+parent folder(project directory)  
+&nbsp;&nbsp;&nbsp;&nbsp;  |- tier1 <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      |--Application_test.csv <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      |--Bureau.csv <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      |--Bureau_balance.csv <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      |--Previous_application.csv <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      |--Installments_payments.csv <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      |--Credit_card_balance.csv <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      |--POS_CASH_balance.csv <br />
+&nbsp;&nbsp;&nbsp;&nbsp;  |- tier2 <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      |--Application_test.csv <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      |--Bureau.csv <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      |--Bureau_balance.csv <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      |--Previous_application.csv <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      |--Installments_payments.csv <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      |--Credit_card_balance.csv <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      |--POS_CASH_balance.csv <br />
+&nbsp;&nbsp;&nbsp;&nbsp; |- tier3   <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      |--Application_train.csv <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      |--Application_test.csv <br />
+&nbsp;&nbsp;&nbsp;&nbsp; |- p4sub_gbm.csv <br />
+
+
+## Running the code
+`contrast.py -d \<data directory>\ -s \<save location>\ -u \<upper_bound>\ -l \<lower_bound>\`
+
+Required parameters:
+
+`<data directory>` Path to the data folder created as per the specifictions.
+
+Optional parameters:
+
+`<save location>` The location to save the output. Defaults to current working directory.
+
+`<upper_bound>` The upper bound for clipping. Defaults to 99.
+
+`<lower_bound>` The lower bound for clipping. Defaults to 3.
+
+
+## nmf.py
+
+* Perfroms nmf, as outlined [here](https://github.com/dsp-uga/Team-keller/wiki/Model-Approaches).
+* Follow the data format given above.
+
+### To run
+`nmf.py -d \<data directory>\ -k \<num_components>\ -p \<percentile>\ -m \<max_iter>\ -o \<overlap>\ `
+
+Required parameters:
+
+`<data directory>` Path to the data folder created as per the specifictions.
+
+Optional parameters:
+
+`<num_components>` The number of components to estimate per block. Defaults to 5.
+
+`<percentile>` The value for thresholding. Defaults to 90.
+
+`<max_iter>` The maximum number of algorithm iterations. Defaults to 20.
+
+`<overlap>` The value for determining whether to merge. Defaults to 0.1.
+
+Output:
+
+The program will output `submission.json` in the given data folder.
+  
   
 ## References
 
