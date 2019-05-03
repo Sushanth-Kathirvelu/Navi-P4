@@ -1,6 +1,3 @@
-# Script reads all files from tier-2,joins them based on keys, and saves
-# to tier-3
-
 import pandas as pd
 import os
 import sys
@@ -72,6 +69,33 @@ def tier3_loader(
         installments_payments,
         pos_cash_balance):
     """
+    Reads all files from tier-2,joins them based on keys, and saves to tier-3.
+    Parameters
+    ----------
+    tier2_loc : str
+        Tier-2 location
+    tier3_loc : str
+        Tier-3 location
+    train_write : str
+        Train file name to write into tier-3
+    test_write : str
+        Test file name to write into tier-3
+    train : str
+        The name of the train file.
+    test : str
+        The name of the test file.
+    bureau : str
+        The name of the bureau file.
+    previous_application : str
+        The name of the previous application file.
+    bureau_balance : str
+        The name of the bureau balance file.
+    credit_card_balance : str
+        The name of the credit card balance file.
+    installments_payments : str
+        The name of the installments payments file.
+    pos_cash_balance : str
+        The name of the pos cash balance file.
     """
 
     # Checking if the tier-2 directory is present in the project directory

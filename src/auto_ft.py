@@ -31,55 +31,20 @@ def read_data(path):
     if path[-1] == '/':
         path = path[:-1]
 
-#    train_df = pd.read_csv(path + '/application_train.csv')
-#    test_df = pd.read_csv(path + '/application_test.csv')
-    train_df = pd.read_csv(
-        path +
-        '/application_train.csv',
-        nrows=50).reset_index(
-        drop=True)
-    test_df = pd.read_csv(
-        path +
-        '/application_test.csv',
-        nrows=50).reset_index(
-        drop=True)
-#    bureau_df = pd.read_csv(path + '/bureau.csv')
-#    bureau_balance_df = pd.read_csv(path + '/bureau_balance.csv')
-#    pos_cash_df = pd.read_csv(path + '/POS_CASH_balance.csv')
-#    credit_card_df = pd.read_csv(path + '/credit_card_balance.csv')
-#    previous_application_df = pd.read_csv(path + '/previous_application.csv')
-#    installments_payments_df = pd.read_csv(path + '/installments_payments.csv')
-    bureau_df = pd.read_csv(
-        path +
-        '/bureau.csv',
-        nrows=55).reset_index(
-        drop=True)
-    bureau_balance_df = pd.read_csv(
-        path + '/bureau_balance.csv',
-        nrows=50).reset_index(
-        drop=True)
-    pos_cash_df = pd.read_csv(
-        path +
-        '/POS_CASH_balance.csv',
-        nrows=50).reset_index(
-        drop=True)
-    credit_card_df = pd.read_csv(
-        path + '/credit_card_balance.csv',
-        nrows=50).reset_index(
-        drop=True)
-    previous_application_df = pd.read_csv(
-        path + '/previous_application.csv',
-        nrows=50).reset_index(
-        drop=True)
-    installments_payments_df = pd.read_csv(
-        path + '/installments_payments.csv',
-        nrows=50).reset_index(
-        drop=True)
+    train_df = pd.read_csv(path + '/application_train.csv')
+    test_df = pd.read_csv(path + '/application_test.csv')
+    bureau_df = pd.read_csv(path + '/bureau.csv')
+    bureau_balance_df = pd.read_csv(path + '/bureau_balance.csv')
+    pos_cash_df = pd.read_csv(path + '/POS_CASH_balance.csv')
+    credit_card_df = pd.read_csv(path + '/credit_card_balance.csv')
+    previous_application_df = pd.read_csv(path + '/previous_application.csv')
+    installments_payments_df = pd.read_csv(path + '/installments_payments.csv')
 
     test_df["TARGET"] = -999
     combine_df = train_df.append(test_df, ignore_index=True)
 
-    return combine_df, bureau_df, bureau_balance_df, pos_cash_df, credit_card_df, previous_application_df, installments_payments_df
+    return combine_df, bureau_df, bureau_balance_df, pos_cash_df, \
+        credit_card_df, previous_application_df, installments_payments_df
 
 
 def create_feature_matrix(
@@ -111,6 +76,8 @@ def create_feature_matrix(
         The previous applications for loans data.
     installments_payments_df : pandas dataframe
         The repayment history data.
+    primitive_set : str
+        If some or all of the primitives should be used
     Returns
     ----------
     train_df : pandas dataframe
@@ -162,9 +129,11 @@ def create_feature_matrix(
     relations['previous_application__pos_cash'] = ft.Relationship(
         es['previous_application']['SK_ID_PREV'], es['pos_cash']['SK_ID_PREV'])
     relations['previous_application__installments_payments'] = ft.Relationship(
-        es['previous_application']['SK_ID_PREV'], es['installments_payments']['SK_ID_PREV'])
+        es['previous_application']['SK_ID_PREV'],
+        es['installments_payments']['SK_ID_PREV'])
     relations['previous_application__credit_card'] = ft.Relationship(
-        es['previous_application']['SK_ID_PREV'], es['credit_card']['SK_ID_PREV'])
+        es['previous_application']['SK_ID_PREV'],
+        es['credit_card']['SK_ID_PREV'])
 
     es = es.add_relationships(list(relations.values()))
 
@@ -177,8 +146,11 @@ def create_feature_matrix(
     elif primitive_set == 'all':
         feature_matrix, feature_defs = ft.dfs(
             entityset=es, target_entity='combine', agg_primitives=[
-                'sum', 'std', 'max', 'skew', 'min', 'mean', 'count', 'percent_true', 'n_unique', 'mode'], trans_primitives=[
-                'day', 'year', 'month', 'weekday', 'haversine', 'num_words', 'num_characters'], max_depth=2, verbose=True)
+                'sum', 'std', 'max', 'skew', 'min', 'mean', 'count',
+                'percent_true', 'n_unique', 'mode'],
+            trans_primitives=['day', 'year', 'month', 'weekday',
+                              'haversine', 'num_words', 'num_characters'],
+            max_depth=2, verbose=True)
 
     train_df = feature_matrix[feature_matrix['TARGET'] != -999]
     test_df = feature_matrix[feature_matrix['TARGET'] == -999]
@@ -262,6 +234,16 @@ def load_feature_matrix(
         The final training dataset.
     final_test : pandas dataframe
         The final testing dataset.
+    primitive_set : str
+        If some or all of the primitives should be used
+    importance_threshold : float
+        The threshold to select features. Defauts to 0.
+    tier3_loc : str
+        Tier-3 location
+    train_write : str
+        Train file name to write into tier-3
+    test_write : str
+        Test file name to write into tier-3
     """
 
     # Checking if tier-3 exists, if not, then creating
@@ -269,10 +251,14 @@ def load_feature_matrix(
         print("Creating tier-3 folder")
         os.mkdir(tier3_loc)
 
-    combine_df, bureau_df, bureau_balance_df, pos_cash_df, credit_card_df, previous_application_df, installments_payments_df = read_data(
-        path)
-    train_df, test_df = create_feature_matrix(combine_df, bureau_df, bureau_balance_df, pos_cash_df,
-                                              credit_card_df, previous_application_df, installments_payments_df,
+    combine_df, bureau_df, bureau_balance_df, pos_cash_df, credit_card_df, \
+        previous_application_df, installments_payments_df = read_data(path)
+
+    train_df, test_df = create_feature_matrix(combine_df, bureau_df,
+                                              bureau_balance_df, pos_cash_df,
+                                              credit_card_df,
+                                              previous_application_df,
+                                              installments_payments_df,
                                               primitive_set)
     final_train, final_test = feature_select(
         train_df, test_df, importance_threshold)

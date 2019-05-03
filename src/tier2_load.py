@@ -1,7 +1,3 @@
-# Script reads all files from tier-1,
-# applies required transformations,
-# and saves to tier-2
-
 import pandas as pd
 import os
 import copy
@@ -321,12 +317,35 @@ def tier2_loader(
         installments_payments,
         pos_cash_balance):
     """
+    Script reads all files from tier-1, applies required transformations,
+    and saves to tier-2.
+    Parameters
+    ----------
+    tier1_loc : str
+        Tier-1 location
+    tier2_loc : str
+        Tier-2 location
+    train : str
+        The name of the train file.
+    test : str
+        The name of the test file.
+    bureau : str
+        The name of the bureau file.
+    previous_application : str
+        The name of the previous application file.
+    bureau_balance : str
+        The name of the bureau balance file.
+    credit_card_balance : str
+        The name of the credit card balance file.
+    installments_payments : str
+        The name of the installments payments file.
+    pos_cash_balance : str
+        The name of the pos cash balance file.
     """
 
     # Checking if the tier-1 pathectory is present in the project pathectory
     if not os.path.isdir(tier1_loc):
         print("Tier-1 folder not present, please create and re-run")
-        # raise NotApathectoryError("tier-1 folder is missing in project path.")
         sys.exit()
 
     # Checking if tier-2 exists, if not, then creating
