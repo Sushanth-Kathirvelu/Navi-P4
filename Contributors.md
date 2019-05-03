@@ -1,6 +1,6 @@
 ## Contributors
 
-[Hemanth Dandu Varma](https://github.com/hemanthme22) <br />
+[Hemanth Dandu](https://github.com/hemanthme22) <br />
 1. Developed scripts for Manual Feature Engineering
 2. Tested the models with different features and Parameters
 3. Packaging and cleaning up entire code base
