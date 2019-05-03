@@ -1,27 +1,9 @@
 # Script reads all files from tier-2,joins them based on keys, and saves
 # to tier-3
 
-# import argparse
 import pandas as pd
 import os
 import sys
-
-# Directory of folder location
-dir = "/Users/hemanth/Desktop/MSAI/DataSciencePracticum/Projects/p4"
-tier2_loc = dir + "/tier2/"
-tier3_loc = dir + "/tier3/"
-
-# Names of all tier-2 csv files
-credit_card_balance = "credit_card_balance.csv"
-installments_payments = "installments_payments.csv"
-pos_cash_balance = "POS_CASH_balance.csv"
-bureau = "bureau.csv"
-bureau_balance = "bureau_balance.csv"
-previous_application = "previous_application.csv"
-train = "application_train.csv"
-test = "application_test.csv"
-train_write = "train_manual.csv"
-test_write = "test_manual.csv"
 
 
 def file_check(tier2_loc, file):
@@ -41,7 +23,6 @@ def file_check(tier2_loc, file):
     # Basic checks to see if all required files are present in tier-1
     if not os.path.isfile(tier2_loc + file):
         print(file + " is missing in tier-2, please check and re-run")
-        # raise FileNotFoundError(file+" is missing in tier-1")
         sys.exit(0)
 
     return True
@@ -77,12 +58,14 @@ def perform_joins(df, bureau_df, pa, pcb, ip, ccb):
     return df
 
 
-def main():
+def tier3_loader(tier2_loc,tier3_loc,train_write,test_write,train,test,previous_application,bureau,bureau_balance,credit_card_balance,installments_payments,pos_cash_balance):
+    """ 
+    """
 
+    
     # Checking if the tier-2 directory is present in the project directory
     if not os.path.isdir(tier2_loc):
         print("Tier-2 folder not present, create using tier2_load.py")
-        # raise NotADirectoryError("tier-1 folder is missing in project dir.")
         sys.exit()
 
     # Checking if tier-3 exists, if not, then creating
@@ -122,6 +105,3 @@ def main():
         train_set.to_csv(path_or_buf=tier3_loc + train_write, index=False)
         test_set.to_csv(path_or_buf=tier3_loc + test_write, index=False)
 
-
-if __name__ == "__main__":
-    main()

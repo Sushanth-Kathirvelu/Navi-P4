@@ -2,26 +2,10 @@
 # applies required transformations,
 # and saves to tier-2
 
-# import argparse
 import pandas as pd
 import os
 import copy
 import sys
-
-# Directory of folder location
-dir = "/Users/hemanth/Desktop/MSAI/DataSciencePracticum/Projects/p4"
-tier2_loc = dir + "/tier2/"
-tier1_loc = dir + "/tier1/"
-
-# Names of all raw csv files
-credit_card_balance = "credit_card_balance.csv"
-installments_payments = "installments_payments.csv"
-pos_cash_balance = "POS_CASH_balance.csv"
-bureau = "bureau.csv"
-bureau_balance = "bureau_balance.csv"
-previous_application = "previous_application.csv"
-train = "application_train.csv"
-test = "application_test.csv"
 
 
 def file_check(tier1_loc, file):
@@ -325,12 +309,14 @@ def pcb_ltw(tier1_loc, pos_cash_balance, tier2_loc):
         pcb_agg.to_csv(path_or_buf=tier2_loc + pos_cash_balance, index=False)
 
 
-def main():
-
-    # Checking if the tier-1 directory is present in the project directory
+def tier2_loader(tier1_loc,tier2_loc,train,test,previous_application,bureau,bureau_balance,credit_card_balance,installments_payments,pos_cash_balance):
+    """ 
+    """
+    
+    # Checking if the tier-1 pathectory is present in the project pathectory
     if not os.path.isdir(tier1_loc):
         print("Tier-1 folder not present, please create and re-run")
-        # raise NotADirectoryError("tier-1 folder is missing in project dir.")
+        # raise NotApathectoryError("tier-1 folder is missing in project path.")
         sys.exit()
 
     # Checking if tier-2 exists, if not, then creating
@@ -346,6 +332,3 @@ def main():
     ip_ltw(tier1_loc, installments_payments, tier2_loc)
     pcb_ltw(tier1_loc, pos_cash_balance, tier2_loc)
 
-
-if __name__ == "__main__":
-    main()
