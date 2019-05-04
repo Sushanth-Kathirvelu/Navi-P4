@@ -242,14 +242,6 @@ def load_feature_matrix(
         Train file name to write into tier-3
     test_write : str
         Test file name to write into tier-3
-
-    Returns
-    ----------
-    final_train : pandas dataframe
-        The final training dataset.
-    final_test : pandas dataframe
-        The final testing dataset.
-
     """
 
     # Checking if tier-3 exists, if not, then creating
