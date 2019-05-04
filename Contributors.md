@@ -16,6 +16,7 @@
 5. Maintained the Kaggle submissions
 6. Updated Wiki 
 7. Updated Readme
+8. Created Report
 
 [Sushanth Kathirvelu](https://github.com/Sushanth-Kathirvelu) <br />
 1. Developed scripts for exploratory data analysis.
@@ -24,3 +25,4 @@
 4. Raising and maintaining GitHub tickets
 5. Updated Wiki 
 6. Updated Readme
+8. Created Report
