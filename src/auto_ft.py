@@ -209,7 +209,8 @@ def feature_select(train_df, test_df, importance_threshold):
     #Making sure train and test have same features.
     #This is required due to one hot encoding.
     feat_list = [k for k in new_features if k in test_df.columns]
-    train_df = train_df[feat_list + 'TARGET']
+    feat_list_train = feat_list + ['TARGET']
+    train_df = train_df[feat_list_train]
     test_df = test_df[feat_list]
 
     train_df, test_df = train_df.align(test_df, join='inner', axis=1)
