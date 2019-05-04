@@ -205,12 +205,11 @@ def feature_select(train_df, test_df, importance_threshold):
             new_features.append(feature)
 
     new_features.append('SK_ID_CURR')
-    new_features.append('TARGET')
 
     #Making sure train and test have same features.
     #This is required due to one hot encoding.
     feat_list = [k for k in new_features if k in test_df.columns]
-    train_df = train_df[feat_list]
+    train_df = train_df[feat_list + 'TARGET']
     test_df = test_df[feat_list]
 
     train_df, test_df = train_df.align(test_df, join='inner', axis=1)
